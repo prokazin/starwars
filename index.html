@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Звёздные Войны: Кликер</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="main">Главная</button>
+            <button class="tab-button" data-tab="upgrades">Улучшения</button>
+            <button class="tab-button" data-tab="bosses">Боссы</button>
+            <button class="tab-button" data-tab="leaderboard">Рейтинг</button>
+        </div>
+
+        <div id="main" class="tab-content active">
+            <div class="header">
+                <h1>Звёздные Войны: Кликер</h1>
+                <div class="difficulty-selector">
+                    <select id="difficulty">
+                        <option value="easy">Лёгкий</option>
+                        <option value="medium" selected>Средний</option>
+                        <option value="hard">Сложный</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="credits-display">
+                <h2>Кредиты: <span id="credits">0</span></h2>
+                <h3>Кредитов/сек: <span id="cps">0</span></h3>
+            </div>
+            
+            <button id="click-button" class="lightsaber-button">
+                <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Собрать кредиты" class="lightsaber">
+            </button>
+            
+            <div class="achievements">
+                <h3>Достижения</h3>
+                <div id="achievements-list"></div>
+            </div>
+        </div>
+
+        <div id="upgrades" class="tab-content">
+            <h2>Улучшения</h2>
+            <div class="upgrades-grid" id="upgrades-list"></div>
+        </div>
+
+        <div id="bosses" class="tab-content">
+            <h2>Битвы с боссами</h2>
+            <div class="boss-progress">
+                <h3>Текущий босс: <span id="current-boss">Дарт Мол</span></h3>
+                <div class="boss-health">
+                    <div class="health-bar" id="boss-health-bar"></div>
+                    <span id="boss-health-text">100/100</span>
+                </div>
+                <button id="attack-button" class="boss-attack">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Атаковать" class="lightsaber">
+                </button>
+                <div class="boss-rewards">
+                    <p>Награда: <span id="boss-reward">1,000</span> кредитов</p>
+                </div>
+            </div>
+            <div class="bosses-list" id="bosses-list"></div>
+        </div>
+
+        <div id="leaderboard" class="tab-content">
+            <h2>Галактический рейтинг</h2>
+            <div class="leaderboard-table">
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Ранг</th>
+                            <th>Имя</th>
+                            <th>Кредиты</th>
+                            <th>Уровень</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <!-- Заполняется JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
