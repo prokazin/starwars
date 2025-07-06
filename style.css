@@ -1,58 +1,166 @@
-body {
-    font-family: 'Orbitron', sans-serif;
-    background-color: #000;
-    color: #ffe81f;
+/* Основные стили */
+:root {
+    --main-color: #ffe81f;
+    --empire-color: #ff3333;
+    --rebels-color: #3399ff;
+    --jedi-color: #00cc99;
+    --dark-bg: rgba(0, 0, 0, 0.85);
+    --darker-bg: rgba(0, 0, 0, 0.9);
+}
+
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-image: url('https://wallpapercave.com/wp/wp2763910.gif');
-    background-size: cover;
-    background-attachment: fixed;
+}
+
+@keyframes move-twink-back {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 5000px; }
+}
+
+@keyframes move-stars {
+    from { background-position: 0 0; }
+    to { background-position: -10000px 0; }
+}
+
+.stars, .twinkling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: -2;
+}
+
+.stars {
+    background: #000 url('https://i.postimg.cc/8CQX7H7V/stars.png') repeat top center;
+    animation: move-stars 200s linear infinite;
+}
+
+.twinkling {
+    background: transparent url('https://i.postimg.cc/8CQX7H7V/twinkling.png') repeat top center;
+    animation: move-twink-back 100s linear infinite;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--main-color);
+    background-color: #000;
+    line-height: 1.6;
+    overflow-x: hidden;
     touch-action: manipulation;
 }
 
 .container {
     max-width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 20px;
+    padding: 15px;
+    margin: 0 auto;
 }
 
 h1, h2, h3 {
-    color: #ffe81f;
-    text-shadow: 0 0 5px #ff5e00;
+    font-family: 'Star Jedi', 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 232, 31, 0.7);
 }
 
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 20px 0 15px;
+    color: var(--main-color);
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin: 15px 0 10px;
+}
+
+.section-title {
+    margin-top: 30px;
+    border-bottom: 2px solid;
+    padding-bottom: 5px;
+}
+
+/* Вкладки */
 .tabs {
     display: flex;
     margin-bottom: 20px;
-    border-bottom: 2px solid #ffe81f;
+    background-color: var(--dark-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 232, 31, 0.3);
 }
 
 .tab-button {
     flex: 1;
-    padding: 10px;
+    padding: 12px 5px;
     background: none;
     border: none;
-    color: #ffe81f;
+    color: var(--main-color);
     font-family: 'Orbitron', sans-serif;
-    font-size: 16px;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .tab-button.active {
     background-color: rgba(255, 232, 31, 0.2);
-    border-bottom: 3px solid #ffe81f;
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--main-color);
+    box-shadow: 0 0 10px var(--main-color);
+}
+
+.tab-icon {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 5px;
+    filter: drop-shadow(0 0 5px var(--main-color));
+}
+
+.tab-button[data-tab="empire"] .tab-icon {
+    filter: drop-shadow(0 0 5px var(--empire-color));
+}
+
+.tab-button[data-tab="rebels"] .tab-icon {
+    filter: drop-shadow(0 0 5px var(--rebels-color));
+}
+
+.tab-button[data-tab="jedi"] .tab-icon {
+    filter: drop-shadow(0 0 5px var(--jedi-color));
 }
 
 .tab-content {
     display: none;
     padding: 15px;
     animation: fadeIn 0.5s;
+    background-color: var(--dark-bg);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .tab-content.active {
@@ -60,75 +168,255 @@ h1, h2, h3 {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Основная вкладка */
+.player-info {
+    background-color: var(--darker-bg);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid var(--main-color);
+    box-shadow: 0 0 10px rgba(255, 232, 31, 0.3);
+}
+
+.level-display {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--main-color);
+}
+
+.xp-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.xp-bar {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.xp-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--xp-percent, 0%);
+    background: linear-gradient(90deg, #ffe81f, #ff9d00);
+    border-radius: 10px;
+    transition: width 0.5s ease;
 }
 
 .credits-display {
     text-align: center;
-    margin-bottom: 30px;
-    background-color: rgba(0, 0, 0, 0.7);
+    margin-bottom: 25px;
+    background-color: var(--darker-bg);
     padding: 15px;
     border-radius: 10px;
-    border: 1px solid #ffe81f;
+    border: 1px solid var(--main-color);
+    box-shadow: 0 0 15px rgba(255, 232, 31, 0.3);
+}
+
+.click-area {
+    position: relative;
+    margin: 0 auto 30px;
+    text-align: center;
 }
 
 .lightsaber-button {
     background: none;
     border: none;
     cursor: pointer;
-    display: block;
-    margin: 0 auto 30px;
     padding: 0;
     transform: scale(1);
     transition: transform 0.1s;
+    position: relative;
     touch-action: manipulation;
-}
-
-.lightsaber-button:active {
-    transform: scale(0.95);
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .lightsaber {
-    width: 150px;
-    height: 150px;
-    filter: drop-shadow(0 0 10px #ff5e00);
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px #ff5e00);
+    transition: all 0.2s;
+    z-index: 1;
+}
+
+.click-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,232,49,0.4) 0%, rgba(255,232,49,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.lightsaber-button:active .click-effect {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.lightsaber-button:active .lightsaber {
+    transform: rotate(15deg) scale(0.95);
+    filter: drop-shadow(0 0 25px #ff0000);
+}
+
+.click-power {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: var(--main-color);
+}
+
+.prestige-section {
+    background-color: var(--darker-bg);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #00cc99;
+    box-shadow: 0 0 15px rgba(0, 204, 153, 0.3);
+    margin-top: 30px;
+    text-align: center;
+}
+
+.prestige-button {
+    background: linear-gradient(135deg, #00cc99, #0066cc);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 204, 153, 0.4);
+}
+
+.prestige-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #555, #333);
+}
+
+.prestige-button:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 204, 153, 0.6);
+}
+
+.prestige-bonus {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #00ffcc;
+}
+
+.prestige-requirements {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* Вкладка Империи */
+#empire .section-title {
+    color: var(--empire-color);
+    border-color: var(--empire-color);
 }
 
 .upgrades-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 15px;
+    margin-bottom: 30px;
 }
 
 .upgrade {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 1px solid #ffe81f;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--empire-color);
     border-radius: 8px;
     padding: 15px;
     cursor: pointer;
     transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.upgrade::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: var(--empire-color);
+    opacity: 0;
+    transition: opacity 0.3s;
 }
 
 .upgrade:hover {
-    background-color: rgba(255, 232, 31, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
+}
+
+.upgrade:hover::after {
+    opacity: 1;
+}
+
+.upgrade.affordable {
+    border-color: #00ff00;
+}
+
+.upgrade.affordable:hover {
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
+}
+
+.upgrade.affordable::after {
+    background-color: #00ff00;
 }
 
 .upgrade h3 {
+    color: var(--empire-color);
     margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .upgrade p {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.upgrade .cost {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.upgrade .cps {
+    color: #00ff00;
+    font-weight: bold;
 }
 
 .boss-progress {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 1px solid #ffe81f;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--empire-color);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 30px;
     text-align: center;
+    box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
 }
 
 .boss-health {
@@ -141,13 +429,28 @@ h1, h2, h3 {
     border-radius: 15px;
     overflow: hidden;
     margin-bottom: 10px;
+    position: relative;
 }
 
-.health-bar div {
+.health-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    background-color: #ff0000;
-    width: 100%;
+    width: var(--health-percent, 100%);
+    background: linear-gradient(90deg, #ff3333, #ff0000);
     transition: width 0.3s;
+}
+
+.boss-rewards {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px 0;
+}
+
+.boss-rewards p {
+    font-size: 0.9rem;
 }
 
 .boss-attack {
@@ -156,115 +459,370 @@ h1, h2, h3 {
     cursor: pointer;
     margin: 20px auto;
     display: block;
+    position: relative;
+    width: 120px;
+    height: 120px;
 }
 
-.boss-attack:active img {
-    transform: rotate(30deg);
+.boss-attack .lightsaber {
+    filter: drop-shadow(0 0 15px #ff0000);
+}
+
+.boss-attack:active .lightsaber {
+    transform: rotate(45deg) scale(0.95);
+    filter: drop-shadow(0 0 25px #ff3333);
+}
+
+.attack-effect {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,51,51,0.4) 0%, rgba(255,51,51,0) 70%);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.boss-attack:active .attack-effect {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.boss-damage {
+    font-size: 1rem;
+    color: var(--empire-color);
+    margin-top: 10px;
 }
 
 .bosses-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 15px;
 }
 
 .boss {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 1px solid #ffe81f;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--empire-color);
     border-radius: 8px;
     padding: 15px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s;
+    position: relative;
 }
 
 .boss:hover {
-    background-color: rgba(255, 232, 31, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
 }
 
-.boss img {
+.boss.defeated {
+    border-color: #00ff00;
+}
+
+.boss.defeated::after {
+    content: '✓';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #00ff00;
+    font-size: 1.2rem;
+}
+
+.boss.current {
+    border: 2px solid var(--main-color);
+    box-shadow: 0 0 15px rgba(255, 232, 31, 0.5);
+}
+
+.boss h3 {
+    color: var(--empire-color);
+    margin-bottom: 10px;
+}
+
+.boss p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.boss .status {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+/* Вкладка Повстанцев */
+#rebels .section-title {
+    color: var(--rebels-color);
+    border-color: var(--rebels-color);
+}
+
+#rebels-upgrades .upgrade {
+    border-color: var(--rebels-color);
+}
+
+#rebels-upgrades .upgrade:hover {
+    box-shadow: 0 5px 15px rgba(51, 153, 255, 0.3);
+}
+
+#rebels-upgrades .upgrade h3 {
+    color: var(--rebels-color);
+}
+
+.missions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.mission {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--rebels-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s;
+}
+
+.mission.completed {
+    border-color: #00ff00;
+    opacity: 0.7;
+}
+
+.mission.completed::after {
+    content: '✓';
+    float: right;
+    color: #00ff00;
+    font-size: 1.2rem;
+}
+
+.mission h3 {
+    color: var(--rebels-color);
+    margin-bottom: 10px;
+}
+
+.mission p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.mission .reward {
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+.mission .progress {
+    height: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.mission .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3399ff, #0066cc);
+    width: var(--progress, 0%);
+    transition: width 0.5s;
+}
+
+.fleet-display {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.ship {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--rebels-color);
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.ship.unlocked {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.ship h3 {
+    color: var(--rebels-color);
+    margin-bottom: 10px;
+}
+
+.ship img {
     width: 80px;
     height: 80px;
     margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px #3399ff);
+}
+
+.ship.unlocked img {
+    filter: drop-shadow(0 0 10px #00ff00);
+}
+
+.ship p {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Вкладка Джедаев */
+#jedi .section-title {
+    color: var(--jedi-color);
+    border-color: var(--jedi-color);
+}
+
+.powers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.power {
+    background-color: var(--darker-bg);
+    border: 1px solid var(--jedi-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.power.unlocked {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.power h3 {
+    color: var(--jedi-color);
+    margin-bottom: 10px;
+}
+
+.power .description {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.power .requirements {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.power .bonus {
+    color: #00ffcc;
+    font-weight: bold;
 }
 
 .leaderboard-table {
     overflow-x: auto;
+    margin-bottom: 30px;
+    background-color: var(--darker-bg);
+    border-radius: 8px;
+    border: 1px solid var(--jedi-color);
+    box-shadow: 0 0 15px rgba(0, 204, 153, 0.3);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ffe81f;
 }
 
 th {
-    background-color: rgba(255, 232, 31, 0.2);
+    background-color: rgba(0, 204, 153, 0.2);
+    padding: 12px;
+    text-align: left;
+    color: var(--jedi-color);
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 204, 153, 0.2);
+}
+
+tr.current-player {
+    background-color: rgba(255, 232, 31, 0.1);
+    font-weight: bold;
 }
 
 tr:hover {
-    background-color: rgba(255, 232, 31, 0.1);
+    background-color: rgba(0, 204, 153, 0.1);
 }
 
-.difficulty-selector {
-    margin-top: 15px;
-}
-
-select {
-    background-color: #000;
-    color: #ffe81f;
-    border: 1px solid #ffe81f;
-    padding: 8px;
-    border-radius: 5px;
-    font-family: 'Orbitron', sans-serif;
-}
-
-.achievements {
-    background-color: rgba(0, 0, 0, 0.7);
-    border: 1px solid #ffe81f;
-    border-radius: 8px;
-    padding: 15px;
-    margin-top: 20px;
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
 }
 
 .achievement {
-    display: flex;
-    align-items: center;
+    background-color: var(--darker-bg);
+    border: 1px solid var(--jedi-color);
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.achievement.earned {
+    border-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+.achievement.earned::after {
+    content: '✓';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #00ff00;
+    font-size: 1.2rem;
+}
+
+.achievement h3 {
+    color: var(--jedi-color);
     margin-bottom: 10px;
 }
 
-.achievement img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+.achievement .description {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
 }
 
-.notification {
+/* Уведомления */
+.notification-container {
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(255, 232, 31, 0.9);
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 5px;
-    opacity: 0;
-    transition: opacity 0.5s;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    pointer-events: none;
     z-index: 1000;
 }
 
+.notification {
+    background-color: rgba(255, 232, 31, 0.9);
+    color: #000;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.5s;
+    max-width: 90%;
+    text-align: center;
+}
+
 .notification.show {
+    transform: translateY(0);
     opacity: 1;
 }
 
-@media (max-width: 600px) {
-    .upgrades-grid {
+/* Адаптивность */
+@media (max-width: 768px) {
+    .upgrades-grid, .missions-list, .fleet-display, .powers-grid, .achievements-grid {
         grid-template-columns: 1fr;
     }
     
@@ -273,7 +831,37 @@ select {
     }
     
     .lightsaber {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.3rem;
+    }
+    
+    h3 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tab-button span {
+        display: none;
+    }
+    
+    .tab-button {
+        padding: 10px 5px;
+    }
+    
+    .tab-icon {
+        margin-bottom: 0;
+    }
+    
+    .bosses-list {
+        grid-template-columns: 1fr;
     }
 }
