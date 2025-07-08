@@ -15,57 +15,80 @@
     <div class="container">
         <div class="tabs">
             <button class="tab-button active" data-tab="main">
-                <span>Главная</span>
+                <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Главная" class="tab-icon">
+                <span>Галактика</span>
             </button>
-            <button class="tab-button" data-tab="upgrades">
-                <span>Улучшения</span>
+            <button class="tab-button" data-tab="empire">
+                <img src="https://cdn-icons-png.flaticon.com/512/528/528101.png" alt="Империя" class="tab-icon">
+                <span>Империя</span>
             </button>
-            <button class="tab-button" data-tab="bosses">
-                <span>Боссы</span>
+            <button class="tab-button" data-tab="rebels">
+                <img src="https://cdn-icons-png.flaticon.com/512/528/528098.png" alt="Повстанцы" class="tab-icon">
+                <span>Повстанцы</span>
             </button>
         </div>
 
         <div id="main" class="tab-content active">
             <div class="header">
-                <h1>Star Wars Clicker</h1>
+                <h1>Галактический Кликер</h1>
+                <div class="player-info">
+                    <div class="level-display">Уровень: <span id="player-level">1</span></div>
+                    <div class="xp-display">
+                        <div class="xp-bar" id="xp-bar"></div>
+                        <span id="xp-text">0/100</span>
+                    </div>
+                </div>
             </div>
             
             <div class="credits-display">
                 <h2>Кредиты: <span id="credits">0</span></h2>
-                <h3>В секунду: <span id="cps">0</span></h3>
+                <h3>Доход: <span id="cps">0</span>/сек</h3>
             </div>
             
             <div class="click-area">
                 <button id="click-button" class="lightsaber-button">
                     <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Собрать кредиты" class="lightsaber">
+                    <div class="click-effect"></div>
                 </button>
                 <div class="click-power">+<span id="click-power">1</span> за клик</div>
             </div>
         </div>
 
-        <div id="upgrades" class="tab-content">
-            <h2>Улучшения</h2>
-            <div class="upgrades-grid" id="upgrades-list"></div>
-        </div>
-
-        <div id="bosses" class="tab-content">
-            <h2>Боссы</h2>
+        <div id="empire" class="tab-content">
+            <h2>Имперские Активы</h2>
+            <div class="upgrades-grid" id="empire-upgrades"></div>
+            
+            <h2 class="section-title">Имперские Боссы</h2>
             <div class="boss-progress">
-                <h3>Текущий босс: <span id="current-boss">Дарт Мол</span></h3>
+                <h3>Текущий босс: <span id="current-boss">Офицер Империи</span></h3>
                 <div class="boss-health">
                     <div class="health-bar" id="boss-health-bar"></div>
                     <span id="boss-health-text">100/100</span>
                 </div>
-                <button id="attack-button" class="boss-attack">
-                    <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Атаковать" class="lightsaber">
-                </button>
                 <div class="boss-rewards">
                     <p>Награда: <span id="boss-reward">1,000</span> кредитов</p>
+                    <p>Опыт: <span id="boss-xp">50</span></p>
                 </div>
+                <button id="attack-button" class="boss-attack">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3413/3413535.png" alt="Атаковать" class="lightsaber">
+                    <div class="attack-effect"></div>
+                </button>
+                <div class="boss-damage">Урон: <span id="attack-power">10</span></div>
             </div>
-            <div class="bosses-list" id="bosses-list"></div>
+            <div class="bosses-list" id="empire-bosses"></div>
+        </div>
+
+        <div id="rebels" class="tab-content">
+            <h2>Повстанческие Улучшения</h2>
+            <div class="upgrades-grid" id="rebels-upgrades"></div>
+            
+            <h2 class="section-title">Миссии</h2>
+            <div class="missions-list" id="missions-list"></div>
         </div>
     </div>
+
+    <div class="notification-container" id="notification-container"></div>
+    <button id="close-button" class="close-button">Закрыть</button>
 
     <script src="script.js"></script>
 </body>
