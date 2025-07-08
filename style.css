@@ -1,9 +1,7 @@
-/* Основные стили */
 :root {
     --main-color: #ffe81f;
     --empire-color: #ff3333;
     --rebels-color: #3399ff;
-    --jedi-color: #00cc99;
     --dark-bg: rgba(0, 0, 0, 0.85);
     --darker-bg: rgba(0, 0, 0, 0.9);
 }
@@ -12,16 +10,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
 }
 
-@keyframes move-twink-back {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 5000px; }
-}
-
-@keyframes move-stars {
-    from { background-position: 0 0; }
-    to { background-position: -10000px 0; }
+body {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--main-color);
+    background-color: #000;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
 }
 
 .stars, .twinkling {
@@ -33,73 +33,39 @@
     width: 100%;
     height: 100%;
     display: block;
-    z-index: -2;
+    z-index: -1;
 }
 
 .stars {
-    background: #000 url('https://i.postimg.cc/8CQX7H7V/stars.png') repeat top center;
-    animation: move-stars 200s linear infinite;
+    background: #000 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="5" height="5"><circle cx="2.5" cy="2.5" r="1" fill="white"/></svg>') repeat;
 }
 
 .twinkling {
-    background: transparent url('https://i.postimg.cc/8CQX7H7V/twinkling.png') repeat top center;
-    animation: move-twink-back 100s linear infinite;
-    z-index: -1;
-    opacity: 0.4;
+    background: transparent url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><circle cx="5" cy="5" r="1" fill="white" opacity="0.5"/></svg>') repeat;
+    animation: twinkle 3s infinite alternate;
 }
 
-body {
-    font-family: 'Orbitron', sans-serif;
-    color: var(--main-color);
-    background-color: #000;
-    line-height: 1.6;
-    overflow-x: hidden;
-    touch-action: manipulation;
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    100% { opacity: 0.8; }
 }
 
 .container {
     max-width: 100%;
     padding: 15px;
     margin: 0 auto;
+    padding-bottom: 60px;
 }
 
-h1, h2, h3 {
-    font-family: 'Star Jedi', 'Orbitron', sans-serif;
-    letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 232, 31, 0.7);
-}
-
-h1 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    color: var(--main-color);
-}
-
-h2 {
-    font-size: 1.5rem;
-    margin: 20px 0 15px;
-    color: var(--main-color);
-}
-
-h3 {
-    font-size: 1.2rem;
-    margin: 15px 0 10px;
-}
-
-.section-title {
-    margin-top: 30px;
-    border-bottom: 2px solid;
-    padding-bottom: 5px;
-}
-
-/* Вкладки */
 .tabs {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     background-color: var(--dark-bg);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 0 15px rgba(255, 232, 31, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .tab-button {
@@ -111,7 +77,6 @@ h3 {
     font-family: 'Orbitron', sans-serif;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: all 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -131,40 +96,30 @@ h3 {
     right: 0;
     height: 3px;
     background-color: var(--main-color);
-    box-shadow: 0 0 10px var(--main-color);
 }
 
 .tab-icon {
     width: 24px;
     height: 24px;
     margin-bottom: 5px;
-    filter: drop-shadow(0 0 5px var(--main-color));
+    filter: drop-shadow(0 0 3px var(--main-color));
 }
 
 .tab-button[data-tab="empire"] .tab-icon {
-    filter: drop-shadow(0 0 5px var(--empire-color));
+    filter: drop-shadow(0 0 3px var(--empire-color));
 }
 
 .tab-button[data-tab="rebels"] .tab-icon {
-    filter: drop-shadow(0 0 5px var(--rebels-color));
-}
-
-.tab-button[data-tab="jedi"] .tab-icon {
-    filter: drop-shadow(0 0 5px var(--jedi-color));
+    filter: drop-shadow(0 0 3px var(--rebels-color));
 }
 
 .tab-content {
     display: none;
     padding: 15px;
-    animation: fadeIn 0.5s;
     background-color: var(--dark-bg);
     border-radius: 10px;
-    margin-bottom: 20px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-}
-
-.tab-content.active {
-    display: block;
+    margin-bottom: 15px;
+    animation: fadeIn 0.3s;
 }
 
 @keyframes fadeIn {
@@ -172,20 +127,34 @@ h3 {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Основная вкладка */
+.tab-content.active {
+    display: block;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-family: 'Star Jedi', 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: var(--main-color);
+    text-shadow: 0 0 10px rgba(255, 232, 31, 0.7);
+    margin-bottom: 10px;
+}
+
 .player-info {
     background-color: var(--darker-bg);
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 15px;
     border: 1px solid var(--main-color);
-    box-shadow: 0 0 10px rgba(255, 232, 31, 0.3);
 }
 
 .level-display {
     font-size: 1.1rem;
     margin-bottom: 8px;
-    color: var(--main-color);
 }
 
 .xp-display {
@@ -222,7 +191,6 @@ h3 {
     padding: 15px;
     border-radius: 10px;
     border: 1px solid var(--main-color);
-    box-shadow: 0 0 15px rgba(255, 232, 31, 0.3);
 }
 
 .click-area {
@@ -234,24 +202,20 @@ h3 {
 .lightsaber-button {
     background: none;
     border: none;
-    cursor: pointer;
     padding: 0;
-    transform: scale(1);
-    transition: transform 0.1s;
+    margin: 0 auto;
+    display: block;
+    width: 120px;
+    height: 120px;
     position: relative;
     touch-action: manipulation;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .lightsaber {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 0 15px #ff5e00);
-    transition: all 0.2s;
+    transition: transform 0.1s;
     z-index: 1;
 }
 
@@ -263,6 +227,7 @@ h3 {
     background: radial-gradient(circle, rgba(255,232,49,0.4) 0%, rgba(255,232,49,0) 70%);
     opacity: 0;
     transition: opacity 0.3s, transform 0.3s;
+    z-index: 0;
 }
 
 .lightsaber-button:active .click-effect {
@@ -278,68 +243,11 @@ h3 {
 .click-power {
     margin-top: 10px;
     font-size: 1.1rem;
-    color: var(--main-color);
-}
-
-.prestige-section {
-    background-color: var(--darker-bg);
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #00cc99;
-    box-shadow: 0 0 15px rgba(0, 204, 153, 0.3);
-    margin-top: 30px;
-    text-align: center;
-}
-
-.prestige-button {
-    background: linear-gradient(135deg, #00cc99, #0066cc);
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 30px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    box-shadow: 0 5px 15px rgba(0, 204, 153, 0.4);
-}
-
-.prestige-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background: linear-gradient(135deg, #555, #333);
-}
-
-.prestige-button:not(:disabled):hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 204, 153, 0.6);
-}
-
-.prestige-bonus {
-    font-size: 0.9rem;
-    margin-top: 5px;
-    color: #00ffcc;
-}
-
-.prestige-requirements {
-    margin-top: 10px;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-/* Вкладка Империи */
-#empire .section-title {
-    color: var(--empire-color);
-    border-color: var(--empire-color);
 }
 
 .upgrades-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -349,64 +257,22 @@ h3 {
     border: 1px solid var(--empire-color);
     border-radius: 8px;
     padding: 15px;
-    cursor: pointer;
     transition: all 0.3s;
     position: relative;
-    overflow: hidden;
-}
-
-.upgrade::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background-color: var(--empire-color);
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.upgrade:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
-}
-
-.upgrade:hover::after {
-    opacity: 1;
 }
 
 .upgrade.affordable {
     border-color: #00ff00;
 }
 
-.upgrade.affordable:hover {
-    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.3);
-}
-
-.upgrade.affordable::after {
-    background-color: #00ff00;
-}
-
 .upgrade h3 {
     color: var(--empire-color);
-    margin-top: 0;
     margin-bottom: 10px;
 }
 
 .upgrade p {
     margin-bottom: 8px;
     font-size: 0.9rem;
-}
-
-.upgrade .cost {
-    color: var(--main-color);
-    font-weight: bold;
-}
-
-.upgrade .cps {
-    color: #00ff00;
-    font-weight: bold;
 }
 
 .boss-progress {
@@ -416,7 +282,6 @@ h3 {
     padding: 20px;
     margin-bottom: 30px;
     text-align: center;
-    box-shadow: 0 0 15px rgba(255, 51, 51, 0.3);
 }
 
 .boss-health {
@@ -456,21 +321,17 @@ h3 {
 .boss-attack {
     background: none;
     border: none;
-    cursor: pointer;
+    padding: 0;
     margin: 20px auto;
     display: block;
+    width: 100px;
+    height: 100px;
     position: relative;
-    width: 120px;
-    height: 120px;
+    touch-action: manipulation;
 }
 
 .boss-attack .lightsaber {
     filter: drop-shadow(0 0 15px #ff0000);
-}
-
-.boss-attack:active .lightsaber {
-    transform: rotate(45deg) scale(0.95);
-    filter: drop-shadow(0 0 25px #ff3333);
 }
 
 .attack-effect {
@@ -488,6 +349,11 @@ h3 {
     transform: scale(1.5);
 }
 
+.boss-attack:active .lightsaber {
+    transform: rotate(45deg) scale(0.95);
+    filter: drop-shadow(0 0 25px #ff3333);
+}
+
 .boss-damage {
     font-size: 1rem;
     color: var(--empire-color);
@@ -496,7 +362,7 @@ h3 {
 
 .bosses-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: 1fr;
     gap: 15px;
 }
 
@@ -506,72 +372,28 @@ h3 {
     border-radius: 8px;
     padding: 15px;
     text-align: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-}
-
-.boss:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(255, 51, 51, 0.3);
 }
 
 .boss.defeated {
     border-color: #00ff00;
 }
 
-.boss.defeated::after {
-    content: '✓';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: #00ff00;
-    font-size: 1.2rem;
-}
-
 .boss.current {
     border: 2px solid var(--main-color);
-    box-shadow: 0 0 15px rgba(255, 232, 31, 0.5);
 }
 
-.boss h3 {
-    color: var(--empire-color);
-    margin-bottom: 10px;
-}
-
-.boss p {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-.boss .status {
-    color: var(--main-color);
-    font-weight: bold;
-}
-
-/* Вкладка Повстанцев */
-#rebels .section-title {
-    color: var(--rebels-color);
+#rebels .upgrade {
     border-color: var(--rebels-color);
 }
 
-#rebels-upgrades .upgrade {
-    border-color: var(--rebels-color);
-}
-
-#rebels-upgrades .upgrade:hover {
-    box-shadow: 0 5px 15px rgba(51, 153, 255, 0.3);
-}
-
-#rebels-upgrades .upgrade h3 {
+#rebels .upgrade h3 {
     color: var(--rebels-color);
 }
 
 .missions-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: 15px;
-    margin-bottom: 30px;
 }
 
 .mission {
@@ -579,215 +401,12 @@ h3 {
     border: 1px solid var(--rebels-color);
     border-radius: 8px;
     padding: 15px;
-    transition: all 0.3s;
 }
 
 .mission.completed {
     border-color: #00ff00;
-    opacity: 0.7;
 }
 
-.mission.completed::after {
-    content: '✓';
-    float: right;
-    color: #00ff00;
-    font-size: 1.2rem;
-}
-
-.mission h3 {
-    color: var(--rebels-color);
-    margin-bottom: 10px;
-}
-
-.mission p {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-}
-
-.mission .reward {
-    color: var(--main-color);
-    font-weight: bold;
-}
-
-.mission .progress {
-    height: 10px;
-    background-color: #333;
-    border-radius: 5px;
-    margin-top: 10px;
-    overflow: hidden;
-}
-
-.mission .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #3399ff, #0066cc);
-    width: var(--progress, 0%);
-    transition: width 0.5s;
-}
-
-.fleet-display {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.ship {
-    background-color: var(--darker-bg);
-    border: 1px solid var(--rebels-color);
-    border-radius: 8px;
-    padding: 15px;
-    text-align: center;
-    transition: all 0.3s;
-}
-
-.ship.unlocked {
-    border-color: #00ff00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-}
-
-.ship h3 {
-    color: var(--rebels-color);
-    margin-bottom: 10px;
-}
-
-.ship img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-    filter: drop-shadow(0 0 10px #3399ff);
-}
-
-.ship.unlocked img {
-    filter: drop-shadow(0 0 10px #00ff00);
-}
-
-.ship p {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-/* Вкладка Джедаев */
-#jedi .section-title {
-    color: var(--jedi-color);
-    border-color: var(--jedi-color);
-}
-
-.powers-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.power {
-    background-color: var(--darker-bg);
-    border: 1px solid var(--jedi-color);
-    border-radius: 8px;
-    padding: 15px;
-    transition: all 0.3s;
-    position: relative;
-}
-
-.power.unlocked {
-    border-color: #00ff00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-}
-
-.power h3 {
-    color: var(--jedi-color);
-    margin-bottom: 10px;
-}
-
-.power .description {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-
-.power .requirements {
-    font-size: 0.8rem;
-    color: #ccc;
-    margin-bottom: 10px;
-}
-
-.power .bonus {
-    color: #00ffcc;
-    font-weight: bold;
-}
-
-.leaderboard-table {
-    overflow-x: auto;
-    margin-bottom: 30px;
-    background-color: var(--darker-bg);
-    border-radius: 8px;
-    border: 1px solid var(--jedi-color);
-    box-shadow: 0 0 15px rgba(0, 204, 153, 0.3);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th {
-    background-color: rgba(0, 204, 153, 0.2);
-    padding: 12px;
-    text-align: left;
-    color: var(--jedi-color);
-}
-
-td {
-    padding: 12px;
-    border-bottom: 1px solid rgba(0, 204, 153, 0.2);
-}
-
-tr.current-player {
-    background-color: rgba(255, 232, 31, 0.1);
-    font-weight: bold;
-}
-
-tr:hover {
-    background-color: rgba(0, 204, 153, 0.1);
-}
-
-.achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.achievement {
-    background-color: var(--darker-bg);
-    border: 1px solid var(--jedi-color);
-    border-radius: 8px;
-    padding: 15px;
-    transition: all 0.3s;
-    position: relative;
-}
-
-.achievement.earned {
-    border-color: #00ff00;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-}
-
-.achievement.earned::after {
-    content: '✓';
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    color: #00ff00;
-    font-size: 1.2rem;
-}
-
-.achievement h3 {
-    color: var(--jedi-color);
-    margin-bottom: 10px;
-}
-
-.achievement .description {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-}
-
-/* Уведомления */
 .notification-container {
     position: fixed;
     bottom: 20px;
@@ -807,12 +426,10 @@ tr:hover {
     padding: 12px 20px;
     border-radius: 5px;
     font-weight: bold;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
     transform: translateY(100px);
     opacity: 0;
     transition: all 0.5s;
     max-width: 90%;
-    text-align: center;
 }
 
 .notification.show {
@@ -820,48 +437,46 @@ tr:hover {
     opacity: 1;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .upgrades-grid, .missions-list, .fleet-display, .powers-grid, .achievements-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .bosses-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .lightsaber {
-        width: 120px;
-        height: 120px;
-    }
-    
-    h1 {
-        font-size: 1.5rem;
-    }
-    
-    h2 {
-        font-size: 1.3rem;
-    }
-    
-    h3 {
-        font-size: 1.1rem;
-    }
+.close-button {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--empire-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: 'Orbitron', sans-serif;
+    z-index: 100;
+    display: none;
 }
 
 @media (max-width: 480px) {
-    .tab-button span {
-        display: none;
+    .container {
+        padding: 10px;
     }
     
-    .tab-button {
-        padding: 10px 5px;
+    .tab-button span {
+        font-size: 12px;
     }
     
     .tab-icon {
-        margin-bottom: 0;
+        width: 20px;
+        height: 20px;
     }
     
-    .bosses-list {
-        grid-template-columns: 1fr;
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .lightsaber-button {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .boss-attack {
+        width: 80px;
+        height: 80px;
     }
 }
